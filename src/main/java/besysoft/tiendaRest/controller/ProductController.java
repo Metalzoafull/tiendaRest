@@ -1,5 +1,6 @@
 package besysoft.tiendaRest.controller;
 
+import besysoft.tiendaRest.exception.AtributeNotMeetRequirements;
 import besysoft.tiendaRest.exception.EntityNotFoundException;
 import besysoft.tiendaRest.model.Product;
 import besysoft.tiendaRest.service.ProductService;
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.management.AttributeNotFoundException;
 import javax.validation.Valid;
 
 @RestController
@@ -30,13 +30,34 @@ public class ProductController {
         return ResponseEntity.ok(productService.getAll());
     }
 
-    @SneakyThrows
     @GetMapping("/getCodigo/{codigo}")
     ResponseEntity<?> getProductCodigo(@PathVariable Long codigo){
-        if (productService.findAllByCodigo(codigo) == null){
-            throw new EntityNotFoundException("el producto no existe");
-        }
-        return ResponseEntity.ok(productService.findAllByCodigo(codigo));
+        return ResponseEntity.ok(productService.findByCodigo(codigo));
 
     }
+
+    @GetMapping("/findByName/{name}")
+    ResponseEntity<?> findByName(@PathVariable String name){
+        return ResponseEntity.ok(productService.findByName(name));
+    }
+
+    @GetMapping("/findByPrice/{price}")
+    ResponseEntity<?> findByPrice(@PathVariable Double price){
+        return ResponseEntity.ok(productService.findByPrice(price));
+    }
+
+    @GetMapping("/findByCategory/{category}")
+    ResponseEntity<?> findByCategory(@PathVariable String category){
+        return ResponseEntity.ok(productService.findByCategory(category));
+
+    }
+
+    @GetMapping("/loadProducts")
+    ResponseEntity<?> loadProducs(){
+
+        productService.loadProduct();
+        return ResponseEntity.ok("productos cargados");
+    }
+
+
 }
