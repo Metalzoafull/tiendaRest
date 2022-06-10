@@ -100,6 +100,7 @@ public class SellerService {
         sellers.add(seller2);
         sellers.add(seller3);
         sellers.add(seller4);
+
     }
 
 }
