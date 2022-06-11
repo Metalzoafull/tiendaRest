@@ -12,6 +12,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class Product {
 
+    //creando una clase producto con todas los valores que se pideron(codigo, nombre, precio, y categoria)
+    //aparte de eso le agregamos anotaciones por si no se cumplen los requisitos necesarios, se mostraran por pantalla en las escepciones
     @NotNull(message= "code number value is required")
     @Min(value = 0, message = "numericField not be negative")
     private Long code;
@@ -26,5 +28,4 @@ public class Product {
     @NotBlank(message = "Category cannot be empty")
     private String category;
 
-    //private Boolean stateP = false;
 }

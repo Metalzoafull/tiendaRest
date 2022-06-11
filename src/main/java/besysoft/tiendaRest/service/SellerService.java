@@ -2,12 +2,14 @@ package besysoft.tiendaRest.service;
 
 
 import besysoft.tiendaRest.exception.AtributeNotMeetRequirements;
+import besysoft.tiendaRest.exception.EntityCodeException;
 import besysoft.tiendaRest.exception.EntityNotFoundException;
 import besysoft.tiendaRest.model.Product;
 import besysoft.tiendaRest.model.Seller;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,15 +18,23 @@ import java.util.Objects;
 @Service
 public class SellerService {
 
+
+    //Service creado de vendedores para cumplir todas las funciones necesarias del ejercicio
     private List<Seller> sellers;
-
-
 
     @Autowired
     private ProductService productService;
 
 
+    //crear el vendedor
+    @SneakyThrows
     public Seller create(Seller seller){
+        sellers.stream()
+                .filter(s -> s.getCode() == seller.getCode())
+                .findFirst()
+                .orElseThrow(
+                        () -> new EntityCodeException(
+                                "This Code Already exist, please choose another"));
         if(sellers == null){
             sellers = new ArrayList<>();
         }
@@ -36,6 +46,7 @@ public class SellerService {
     }
 
 
+    //listar y devolver a los vendedores
     @SneakyThrows
     public List<Seller> getSellers(){
         if (!sellers.isEmpty()){
@@ -45,6 +56,7 @@ public class SellerService {
         }
     }
 
+    //buscar un vendedor por su codigo
     @SneakyThrows
     public Seller findSellerByCode(Long code){
         return sellers.stream()
@@ -53,6 +65,7 @@ public class SellerService {
                 .orElseThrow(() -> new EntityNotFoundException("seller not found"));
     }
 
+    //vendedor realizando una venta(es usado par aun solo producto)
     public Seller realizeSell(Long sellerCode, Long productcode){
         Product producto = productService.findByCodigo(productcode);
         Seller seller = this.findSellerByCode(sellerCode);
@@ -60,6 +73,8 @@ public class SellerService {
         return seller;
     }
 
+    //vendedor realizando muchas ventas(es solo para varios productos,
+    // si vas a mandar uno solo tiene que ser una lista)
     public Seller realizeSales(Long sellerCode, List<Long> productList){
         for (Long i : productList) {
             this.realizeSell(sellerCode, i);
@@ -67,6 +82,8 @@ public class SellerService {
         return this.findSellerByCode(sellerCode);
     }
 
+    //devolver la comision que recibe un vendedor
+    // (devolvera una exepcion si no tiene la cantidad de ventas necesaria)
     @SneakyThrows
     public Double makeCommission(Long sellerCode){
         Seller seller = this.findSellerByCode(sellerCode);
@@ -88,6 +105,7 @@ public class SellerService {
 
     }
 
+    //cargar vendedores por defecto
     public void loadSellers(){
         this.sellers = new ArrayList<>();
 

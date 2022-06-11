@@ -2,6 +2,7 @@ package besysoft.tiendaRest.controller;
 
 import besysoft.tiendaRest.dto.ErrorDTO;
 import besysoft.tiendaRest.exception.AtributeNotMeetRequirements;
+import besysoft.tiendaRest.exception.EntityCodeException;
 import besysoft.tiendaRest.exception.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,9 @@ import java.util.List;
 @RestControllerAdvice
 public class CustomExceptionHandler {
 
+
+    //Controler para manejar las Exepciones
+    //Si el body que se agrega no cumple con los requisitos minimos puestos en su clase aparecera este error
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorDTO> methodArgumentNotValidException(HttpServletRequest request, MethodArgumentNotValidException ex) {
 
@@ -32,24 +36,29 @@ public class CustomExceptionHandler {
     }
 
 
+    //Si no se encuentra la entidad se manejara este Error
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorDTO> methodArgumentNotFoundException(HttpServletRequest request, EntityNotFoundException ex){
+    public ResponseEntity<ErrorDTO> EntityNotFoundException(HttpServletRequest request, EntityNotFoundException ex){
         ErrorDTO errorDTO = ErrorDTO.builder().statusCode(HttpStatus.NOT_FOUND.value()).message(ex.getMessage()).uriRequested(request.getRequestURI()).build();
         return new ResponseEntity<>(errorDTO,HttpStatus.NOT_FOUND);
 
     }
 
+
     @ExceptionHandler(AtributeNotMeetRequirements.class)
-    public ResponseEntity<ErrorDTO> methodArgumentNotFoundException(HttpServletRequest request, AtributeNotMeetRequirements ex){
+    public ResponseEntity<ErrorDTO> AtributeNotMeetRequirements(HttpServletRequest request, AtributeNotMeetRequirements ex){
         ErrorDTO errorDTO = ErrorDTO.builder().statusCode(HttpStatus.BAD_REQUEST.value()).message(ex.getMessage()).uriRequested(request.getRequestURI()).build();
         return new ResponseEntity<>(errorDTO,HttpStatus.BAD_REQUEST);
 
     }
 
-    /*@ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorDTO> methodsArgumentNotFoundException(HttpServletRequest request, EntityNotFoundException ex){
+    //Si el codigo ya existe en lista de vendedores o la lista de productos se manejara este errror
+    @ExceptionHandler(EntityCodeException.class)
+    public ResponseEntity<ErrorDTO> EntityCodeException(HttpServletRequest request, EntityCodeException ex){
+        ErrorDTO errorDTO = ErrorDTO.builder().statusCode(HttpStatus.BAD_REQUEST.value()).message(ex.getMessage()).uriRequested(request.getRequestURI()).build();
+        return new ResponseEntity<>(errorDTO,HttpStatus.BAD_REQUEST);
 
-    }*/
+    }
 
 
 }

@@ -1,7 +1,9 @@
 package besysoft.tiendaRest.service;
 
+import besysoft.tiendaRest.exception.EntityCodeException;
 import besysoft.tiendaRest.exception.EntityNotFoundException;
 import besysoft.tiendaRest.model.Product;
+import besysoft.tiendaRest.model.Seller;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +14,19 @@ import java.util.Objects;
 @Service
 public class ProductService {
 
+
+    //Service creado de productos para cumplir todas las funciones necesarias del ejercicio
+
     private List<Product> products;
 
+    //crear producto
+    @SneakyThrows
     public Product create(Product product){
+        products.stream()
+                .filter(p -> p.getCode() == product.getCode())
+                .findFirst()
+                .orElseThrow(() -> new EntityCodeException(
+                        "This Code Already exist, please choose another"));
         if (products == null){
             products = new ArrayList<>();
         }
@@ -22,10 +34,12 @@ public class ProductService {
         return product;
     }
 
+    //listar todos los productos
     public List<Product> getAll() {
         return products;
     }
 
+    //buscar un producto por codigo
     @SneakyThrows
     public Product findByCodigo(Long codigo){
         return products.stream()
@@ -34,6 +48,7 @@ public class ProductService {
                 .orElseThrow(() -> new EntityNotFoundException("el producto no existe"));
     }
 
+    //buscar productos por nombre
     @SneakyThrows
     public List<Product> findByName(String name){
         List<Product> productList = products.stream()
@@ -45,6 +60,7 @@ public class ProductService {
         return productList;
     }
 
+    //buscar productos por precuio
     @SneakyThrows
     public List<Product> findByPrice(Double price){
         List<Product> productList = products.stream()
@@ -56,6 +72,7 @@ public class ProductService {
         return productList;
     }
 
+    //buscar productos por categoria
     @SneakyThrows
     public List<Product> findByCategory(String category){
         List<Product> productList = products.stream()
@@ -68,6 +85,8 @@ public class ProductService {
 
     }
 
+
+    //metodo para crear algunos productos por defecto
     public void loadProduct(){
         this.products = new ArrayList<>();
 

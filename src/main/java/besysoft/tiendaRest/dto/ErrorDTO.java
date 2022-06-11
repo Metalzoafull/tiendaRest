@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ErrorDTO {
 
-
+    //Un constructor de errores, guarda el status code, mensaje y la ruta que se llamo
     @JsonProperty("status_code")
     private int statusCode;
     @JsonProperty("message")

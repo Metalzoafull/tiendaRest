@@ -2,7 +2,6 @@ package besysoft.tiendaRest.controller;
 
 import besysoft.tiendaRest.model.Seller;
 import besysoft.tiendaRest.service.SellerService;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,37 +10,40 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/seller")
+@RequestMapping("/seller")// le aclaro la runa donde quiero que se llame
 public class SellerController {
 
     @Autowired
     private SellerService sellerService;
 
 
+    //peticion para crear vendedor
     @PostMapping("/create")
     ResponseEntity<?> createSeller(@Valid @RequestBody Seller seller){
         sellerService.create(seller);
         return ResponseEntity.ok("fue creado exitosamente");
     }
 
-    @SneakyThrows
+    //peticion para agregar un producto al vendedor
     @PostMapping("/addProductSeller/{sellerCode}/{productCode}")
     ResponseEntity<?> addProductSeller(@PathVariable Long sellerCode, @PathVariable Long productCode){
         return ResponseEntity.ok(sellerService.realizeSell(sellerCode, productCode));
     }
 
+    //peticion para agregar varios productos al vendedor
     @PostMapping("/addProductsSeller/{sellerCode}")
     ResponseEntity<?> addProductsSeller(@PathVariable Long sellerCode, @RequestBody List<Long> productList){
         return ResponseEntity.ok(sellerService.realizeSales(sellerCode, productList));
     }
 
-    @SneakyThrows
+
+    //peticion para devolver la comicion que recibira X vendedor
     @GetMapping("/commision/{sellerCode}")
     ResponseEntity<?> makeCommission(@PathVariable Long sellerCode){
         return ResponseEntity.ok(sellerService.makeCommission(sellerCode));
     }
 
-    @SneakyThrows
+    //listar vendedores
     @GetMapping("/getAll")
     ResponseEntity<?> getAllSellers(){
         return ResponseEntity.ok(sellerService.getSellers());
@@ -52,6 +54,10 @@ public class SellerController {
         sellerService.loadSellers();
         return ResponseEntity.ok("vendedores cargados");
     }
+
+
+
+
 
 
 }
