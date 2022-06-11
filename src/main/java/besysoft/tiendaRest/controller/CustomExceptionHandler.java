@@ -30,24 +30,29 @@ public class CustomExceptionHandler {
         StringBuilder errorMessage = new StringBuilder();
         fieldErrors.forEach(f -> errorMessage.append(f.getField()).append(": ").append(f.getDefaultMessage()).append(", "));
 
-        ErrorDTO errorDTO = new ErrorDTO(HttpStatus.BAD_REQUEST.value(), errorMessage.toString(), request.getRequestURI());
+        ErrorDTO errorDTO = new ErrorDTO(HttpStatus.BAD_REQUEST.toString(), errorMessage.toString(), request.getRequestURI());
         return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
 
     }
 
 
     //Si no se encuentra la entidad se manejara este Error
-    @ExceptionHandler(EntityNotFoundException.class)
+    @ExceptionHandler(value = EntityNotFoundException.class)
+    public ResponseEntity<ErrorDTO> businessExceptionHandler(EntityNotFoundException ex){
+        ErrorDTO errorDTO = ErrorDTO.builder().statusCode(ex.getCode()).message(ex.getMessage()).uriRequested(ex.getStatus().toString()).build();
+        return new ResponseEntity<>(errorDTO, ex.getStatus());
+    }
+    /*@ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorDTO> EntityNotFoundException(HttpServletRequest request, EntityNotFoundException ex){
         ErrorDTO errorDTO = ErrorDTO.builder().statusCode(HttpStatus.NOT_FOUND.value()).message(ex.getMessage()).uriRequested(request.getRequestURI()).build();
         return new ResponseEntity<>(errorDTO,HttpStatus.NOT_FOUND);
 
-    }
+    }*/
 
 
     @ExceptionHandler(AtributeNotMeetRequirements.class)
-    public ResponseEntity<ErrorDTO> AtributeNotMeetRequirements(HttpServletRequest request, AtributeNotMeetRequirements ex){
-        ErrorDTO errorDTO = ErrorDTO.builder().statusCode(HttpStatus.BAD_REQUEST.value()).message(ex.getMessage()).uriRequested(request.getRequestURI()).build();
+    public ResponseEntity<ErrorDTO> AtributeNotMeetRequirements(AtributeNotMeetRequirements ex){
+        ErrorDTO errorDTO = ErrorDTO.builder().statusCode(ex.getCode()).message(ex.getMessage()).uriRequested(ex.getStatus().toString()).build();
         return new ResponseEntity<>(errorDTO,HttpStatus.BAD_REQUEST);
 
     }
@@ -55,8 +60,8 @@ public class CustomExceptionHandler {
     //Si el codigo ya existe en lista de vendedores o la lista de productos se manejara este errror
     @ExceptionHandler(EntityCodeException.class)
     public ResponseEntity<ErrorDTO> EntityCodeException(HttpServletRequest request, EntityCodeException ex){
-        ErrorDTO errorDTO = ErrorDTO.builder().statusCode(HttpStatus.BAD_REQUEST.value()).message(ex.getMessage()).uriRequested(request.getRequestURI()).build();
-        return new ResponseEntity<>(errorDTO,HttpStatus.BAD_REQUEST);
+        ErrorDTO errorDTO = ErrorDTO.builder().statusCode(HttpStatus.CREATED.toString()).message(ex.getMessage()).uriRequested(request.getRequestURI()).build();
+        return new ResponseEntity<>(errorDTO,HttpStatus.CREATED);
 
     }
 

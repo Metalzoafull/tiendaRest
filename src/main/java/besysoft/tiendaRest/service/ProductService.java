@@ -3,8 +3,8 @@ package besysoft.tiendaRest.service;
 import besysoft.tiendaRest.exception.EntityCodeException;
 import besysoft.tiendaRest.exception.EntityNotFoundException;
 import besysoft.tiendaRest.model.Product;
-import besysoft.tiendaRest.model.Seller;
 import lombok.SneakyThrows;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,26 +17,35 @@ public class ProductService {
 
     //Service creado de productos para cumplir todas las funciones necesarias del ejercicio
 
-    private List<Product> products;
+    private List<Product> products = new ArrayList<>();
 
     //crear producto
     @SneakyThrows
     public Product create(Product product){
-        products.stream()
-                .filter(p -> p.getCode() == product.getCode())
-                .findFirst()
-                .orElseThrow(() -> new EntityCodeException(
-                        "This Code Already exist, please choose another"));
         if (products == null){
             products = new ArrayList<>();
         }
-        products.add(product);
+        Product product1 = products.stream()
+                .filter(p -> Objects.equals(p.getCode(), product.getCode()))
+                .findFirst()
+                .orElse(null);
+        if (product1 == null){
+            products.add(product);
+        }else {
+            throw new EntityCodeException("This Code Already exist, please choose another");
+        }
+
         return product;
     }
 
     //listar todos los productos
+    @SneakyThrows
     public List<Product> getAll() {
-        return products;
+        if (!this.products.isEmpty()){
+            return products;
+        }else {
+            throw new EntityNotFoundException("not exist products", "P-402", HttpStatus.NOT_FOUND);
+        }
     }
 
     //buscar un producto por codigo
@@ -45,7 +54,7 @@ public class ProductService {
         return products.stream()
                 .filter(p -> Objects.equals(p.getCode(), codigo))
                 .findFirst()
-                .orElseThrow(() -> new EntityNotFoundException("el producto no existe"));
+                .orElseThrow(() -> new EntityNotFoundException("this code no exist", "P-402", HttpStatus.NOT_FOUND));
     }
 
     //buscar productos por nombre
@@ -55,7 +64,7 @@ public class ProductService {
                 .filter(p -> Objects.equals(p.getName(), name))
                 .toList();
         if (productList.isEmpty()){
-            throw new EntityNotFoundException("product name not exist");
+            throw new EntityNotFoundException("There are no products with that name", "P-402", HttpStatus.NOT_FOUND);
         }
         return productList;
     }
@@ -67,7 +76,7 @@ public class ProductService {
                 .filter(p -> Objects.equals(p.getPrice(), price))
                 .toList();
         if (productList.isEmpty()){
-            throw new EntityNotFoundException("product price not exist");
+            throw new EntityNotFoundException("Not exist products with that price", "P-402", HttpStatus.NOT_FOUND);
         }
         return productList;
     }
@@ -79,7 +88,7 @@ public class ProductService {
                 .filter(p -> Objects.equals(p.getCategory(), category))
                 .toList();
         if (productList.isEmpty()){
-            throw new EntityNotFoundException("product category not exist");
+            throw new EntityNotFoundException("Not exist products with that category", "P-402", HttpStatus.NOT_FOUND);
         }
         return productList;
 
