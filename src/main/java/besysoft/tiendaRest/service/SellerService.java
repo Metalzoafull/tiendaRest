@@ -29,9 +29,6 @@ public class SellerService {
     //crear el vendedor
     @SneakyThrows
     public Seller create(Seller seller){
-        if(sellers == null){
-            sellers = new ArrayList<>();
-        }
         if(seller.getProductList() == null){
             seller.setProductList(new ArrayList<>());
         }
@@ -94,7 +91,7 @@ public class SellerService {
         Seller seller = this.findSellerByCode(sellerCode);
         List<Product> productList = seller.getProductList();
         double result;
-        if (productList.size() > 1){
+        if (productList.size() > 0){
             result = productList.stream()
                     .map(Product::getPrice)
                     .reduce(Double::sum).orElse(0.0);

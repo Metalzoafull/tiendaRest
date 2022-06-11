@@ -22,9 +22,6 @@ public class ProductService {
     //crear producto
     @SneakyThrows
     public Product create(Product product){
-        if (products == null){
-            products = new ArrayList<>();
-        }
         Product product1 = products.stream()
                 .filter(p -> Objects.equals(p.getCode(), product.getCode()))
                 .findFirst()
