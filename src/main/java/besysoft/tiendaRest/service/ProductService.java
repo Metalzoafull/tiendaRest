@@ -14,7 +14,6 @@ import java.util.Objects;
 @Service
 public class ProductService {
 
-
     //Service creado de productos para cumplir todas las funciones necesarias del ejercicio
 
     private List<Product> products = new ArrayList<>();
@@ -91,7 +90,6 @@ public class ProductService {
 
     }
 
-
     //metodo para crear algunos productos por defecto
     public void loadProduct(){
         this.products = new ArrayList<>();
@@ -109,8 +107,6 @@ public class ProductService {
         this.products.add(product4);
         this.products.add(product5);
         this.products.add(product6);
-
-
     }
 
 

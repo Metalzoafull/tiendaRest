@@ -2,7 +2,6 @@ package besysoft.tiendaRest.controller;
 
 
 import besysoft.tiendaRest.model.Product;
-import besysoft.tiendaRest.model.Seller;
 import besysoft.tiendaRest.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -36,8 +35,7 @@ public class ProductController {
                     content = @Content) })
     @PostMapping("/create")
     ResponseEntity<?> createProduct(@Valid @RequestBody Product product) {
-        productService.create(product);
-        return ResponseEntity.ok("fue creado exitosamente");
+        return ResponseEntity.ok(productService.create(product));
     }
 
     //peticion para listar productos
@@ -109,9 +107,7 @@ public class ProductController {
 
     @Operation(summary = "Load Products")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Load Products",
-                    content = { @Content( mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = Product.class))) })})
+            @ApiResponse(responseCode = "200", description = "Load Products")})
     @GetMapping("/loadProducts")
     ResponseEntity<?> loadProducs(){
 

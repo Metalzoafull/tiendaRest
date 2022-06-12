@@ -1,7 +1,7 @@
 package besysoft.tiendaRest.service;
 
 
-import besysoft.tiendaRest.exception.AtributeNotMeetRequirements;
+import besysoft.tiendaRest.exception.NotRequirements;
 import besysoft.tiendaRest.exception.EntityCodeException;
 import besysoft.tiendaRest.exception.EntityNotFoundException;
 import besysoft.tiendaRest.model.Product;
@@ -18,13 +18,11 @@ import java.util.Objects;
 @Service
 public class SellerService {
 
-
     //Service creado de vendedores para cumplir todas las funciones necesarias del ejercicio
     private List<Seller> sellers = new ArrayList<>();
 
     @Autowired
     private ProductService productService;
-
 
     //crear el vendedor
     @SneakyThrows
@@ -44,9 +42,6 @@ public class SellerService {
 
         return seller;
     }
-
-
-
 
     //listar y devolver a los vendedores
     @SneakyThrows
@@ -101,7 +96,7 @@ public class SellerService {
                 result = (10 * result)/100;
             }
         }else{
-            throw new AtributeNotMeetRequirements("the seller does not have the necessary sales", "P-403",HttpStatus.BAD_REQUEST);
+            throw new NotRequirements("the seller does not have the necessary sales", "P-403",HttpStatus.BAD_REQUEST);
         }
         return result;
 

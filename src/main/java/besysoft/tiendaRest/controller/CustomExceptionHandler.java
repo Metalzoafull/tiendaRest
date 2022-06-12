@@ -1,7 +1,7 @@
 package besysoft.tiendaRest.controller;
 
 import besysoft.tiendaRest.dto.ErrorDTO;
-import besysoft.tiendaRest.exception.AtributeNotMeetRequirements;
+import besysoft.tiendaRest.exception.NotRequirements;
 import besysoft.tiendaRest.exception.EntityCodeException;
 import besysoft.tiendaRest.exception.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -35,23 +35,15 @@ public class CustomExceptionHandler {
 
     }
 
-
     //Si no se encuentra la entidad se manejara este Error
     @ExceptionHandler(value = EntityNotFoundException.class)
     public ResponseEntity<ErrorDTO> businessExceptionHandler(EntityNotFoundException ex){
         ErrorDTO errorDTO = ErrorDTO.builder().statusCode(ex.getCode()).message(ex.getMessage()).uriRequested(ex.getStatus().toString()).build();
         return new ResponseEntity<>(errorDTO, ex.getStatus());
     }
-    /*@ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorDTO> EntityNotFoundException(HttpServletRequest request, EntityNotFoundException ex){
-        ErrorDTO errorDTO = ErrorDTO.builder().statusCode(HttpStatus.NOT_FOUND.value()).message(ex.getMessage()).uriRequested(request.getRequestURI()).build();
-        return new ResponseEntity<>(errorDTO,HttpStatus.NOT_FOUND);
 
-    }*/
-
-
-    @ExceptionHandler(AtributeNotMeetRequirements.class)
-    public ResponseEntity<ErrorDTO> AtributeNotMeetRequirements(AtributeNotMeetRequirements ex){
+    @ExceptionHandler(NotRequirements.class)
+    public ResponseEntity<ErrorDTO> AtributeNotMeetRequirements(NotRequirements ex){
         ErrorDTO errorDTO = ErrorDTO.builder().statusCode(ex.getCode()).message(ex.getMessage()).uriRequested(ex.getStatus().toString()).build();
         return new ResponseEntity<>(errorDTO,HttpStatus.BAD_REQUEST);
 

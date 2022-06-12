@@ -1,7 +1,6 @@
 package besysoft.tiendaRest.controller;
 
 import besysoft.tiendaRest.dto.ErrorDTO;
-import besysoft.tiendaRest.model.Product;
 import besysoft.tiendaRest.model.Seller;
 import besysoft.tiendaRest.service.SellerService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,7 +23,6 @@ public class SellerController {
     @Autowired
     private SellerService sellerService;
 
-
     //peticion para crear vendedor
     @Operation(summary = "Created Seller")
     @ApiResponses(value = {
@@ -37,8 +35,7 @@ public class SellerController {
                     content = @Content) })
     @PostMapping("/create")
     ResponseEntity<?> createSeller(@Valid @RequestBody Seller seller){
-        sellerService.create(seller);
-        return ResponseEntity.ok("fue creado exitosamente");
+        return ResponseEntity.ok(sellerService.create(seller));
     }
 
     //peticion para agregar un producto al vendedor
@@ -98,9 +95,7 @@ public class SellerController {
 
     @Operation(summary = "Load Sellers")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Load Sellers",
-                    content = { @Content( mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = Seller.class))) })})
+            @ApiResponse(responseCode = "200", description = "Load Sellers" )})
     @GetMapping("/loadSellers")
     ResponseEntity<?> loadSellers(){
         sellerService.loadSellers();
