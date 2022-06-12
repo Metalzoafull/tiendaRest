@@ -15,3 +15,9 @@
 - Deberá diseñarse un Diagrama de Entidad Relación para la solución.
 
 - Deberá ejecutarse por consola y se almacenarán los datos en memoria.
+
+    
+
+
+Diagrama de Relaciones:
+    ![img.png](diagramaRelacion.png)
