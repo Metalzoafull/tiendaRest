@@ -90,7 +90,7 @@ public class SellerService {
             result = productList.stream()
                     .map(Product::getPrice)
                     .reduce(Double::sum).orElse(0.0);
-            if (productList.size() == 2){
+            if (productList.size() <= 2){
                 result = (5 * result)/100;
             }else{
                 result = (10 * result)/100;
