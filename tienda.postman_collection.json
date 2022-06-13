@@ -1,0 +1,215 @@
+{
+	"variables": [],
+	"info": {
+		"name": "tienda",
+		"_postman_id": "3ac692f9-36d6-cc51-079c-4aa21d34f4cd",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get",
+			"description": "",
+			"item": [
+				{
+					"name": "http://localhost:8080/product/getAll",
+					"request": {
+						"url": "http://localhost:8080/product/getAll",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "get all de product"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/seller/getAll",
+					"request": {
+						"url": "http://localhost:8080/seller/getAll",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "get all vendedores"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/product/getCode/48",
+					"request": {
+						"url": "http://localhost:8080/product/getCode/48",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "buscar productos por codigo"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/product/getsName/cereales",
+					"request": {
+						"url": "http://localhost:8080/product/getsName/cereales",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "buscar productos por nombre"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/product/getsPrice/10.5",
+					"request": {
+						"url": "http://localhost:8080/product/getsPrice/10.5",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "buscar productos por precio"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/product/getsCategory/alimento",
+					"request": {
+						"url": "http://localhost:8080/product/getsCategory/alimento",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "buscar productos por categoria"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/seller/findByCode/1",
+					"request": {
+						"url": "http://localhost:8080/seller/findByCode/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "buscar vendedor por codigo"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/seller/comision/1",
+					"request": {
+						"url": "http://localhost:8080/seller/comision/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "comision de un vendedor"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/seller/loadSellers",
+					"request": {
+						"url": "http://localhost:8080/seller/loadSellers",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "cargar vendedores"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/product/loadProducts",
+					"request": {
+						"url": "http://localhost:8080/product/loadProducts",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "cargar productos"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/seller/commision/1",
+					"request": {
+						"url": "http://localhost:8080/seller/commision/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "mostrar la comision que recibira X vendedor"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "post",
+			"description": "peticiones post",
+			"item": [
+				{
+					"name": "http://localhost:8080/seller/create",
+					"request": {
+						"url": "http://localhost:8080/seller/create",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"code\": 1,\n\t\"name\": \"agustina\",\n\t\"salary\": 24.5\n}"
+						},
+						"description": "probando el metodo create del controller seller"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/product/create",
+					"request": {
+						"url": "http://localhost:8080/product/create",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"code\": 48,\n\t\"name\": \"manteca\",\n\t\"price\": 3.5,\n\t\"category\": \"alimento\"\n}"
+						},
+						"description": "probando el metodo create del controller product"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/seller/addProductSeller/1/4739",
+					"request": {
+						"url": "http://localhost:8080/seller/addProductSeller/1/4739",
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"description": "agregar un producto en especifico a un vendedor"
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:8080/seller/addProductsSeller/1",
+					"request": {
+						"url": "http://localhost:8080/seller/addProductsSeller/1",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t48,54\n\t]"
+						},
+						"description": "aderir X cantidad de productos a un vendedor"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

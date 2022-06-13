@@ -65,7 +65,7 @@ public class SellerService {
     //vendedor realizando una venta(es usado par aun solo producto)
     public Seller realizeSell(Long sellerCode, Long productcode){
         Seller seller = this.findSellerByCode(sellerCode);
-        Product producto = productService.findByCodigo(productcode);
+        Product producto = productService.findByCode(productcode);
         seller.getProductList().add(producto);
         return seller;
     }

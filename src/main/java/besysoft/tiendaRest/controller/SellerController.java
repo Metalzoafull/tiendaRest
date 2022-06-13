@@ -24,7 +24,7 @@ public class SellerController {
     private SellerService sellerService;
 
     //peticion para crear vendedor
-    @Operation(summary = "Created Seller")
+    @Operation(summary = "Created Seller(quitar el product list a la hora de crear al vendedor, el schema es solo un ejemplo de como quedaria la entidad completa)")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Create Seller",
                     content = { @Content(mediaType = "application/json",

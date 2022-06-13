@@ -46,9 +46,9 @@ public class ProductService {
 
     //buscar un producto por codigo
     @SneakyThrows
-    public Product findByCodigo(Long codigo){
+    public Product findByCode(Long productCode){
         return products.stream()
-                .filter(p -> Objects.equals(p.getCode(), codigo))
+                .filter(p -> Objects.equals(p.getCode(), productCode))
                 .findFirst()
                 .orElseThrow(() -> new EntityNotFoundException("this code no exist", "P-402", HttpStatus.NOT_FOUND));
     }

@@ -59,14 +59,14 @@ public class ProductController {
                             schema = @Schema(implementation = Product.class)) }),
             @ApiResponse(responseCode = "P-402", description = "this code no exist",
                     content = @Content)})
-    @GetMapping("/getCodigo/{codigo}")
-    ResponseEntity<?> getProductCodigo(@PathVariable Long codigo) {
-        return ResponseEntity.ok(productService.findByCodigo(codigo));
+    @GetMapping("/getCode/{productCode}")
+    ResponseEntity<?> getProductCodigo(@PathVariable Long productCode) {
+        return ResponseEntity.ok(productService.findByCode(productCode));
 
     }
 
     //buscar productos por nombre
-    @GetMapping("/findByName/{name}")
+    @GetMapping("/getsName/{name}")
     @Operation(summary = "Find Products By Name")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Get All Products By Name",
@@ -86,7 +86,7 @@ public class ProductController {
                             array = @ArraySchema(schema = @Schema(implementation = Product.class))) }),
             @ApiResponse(responseCode = "P-402", description = "Not exist products with that price",
                     content = @Content)})
-    @GetMapping("/findByPrice/{price}")
+    @GetMapping("/getsPrice/{price}")
     ResponseEntity<?> findByPrice(@PathVariable Double price){
         return ResponseEntity.ok(productService.findByPrice(price));
     }
@@ -99,7 +99,7 @@ public class ProductController {
                             array = @ArraySchema(schema = @Schema(implementation = Product.class))) }),
             @ApiResponse(responseCode = "P-402", description = "Not exist products with that category",
                     content = @Content)})
-    @GetMapping("/findByCategory/{category}")
+    @GetMapping("/getsCategory/{category}")
     ResponseEntity<?> findByCategory(@PathVariable String category){
         return ResponseEntity.ok(productService.findByCategory(category));
 
