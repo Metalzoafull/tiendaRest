@@ -39,6 +39,7 @@ class ProductServiceTest {
 
     private Product product;
     private Product product2;
+    private Product product3;
     private List<Product> products = new ArrayList<>();
 
     @BeforeAll
@@ -55,6 +56,13 @@ class ProductServiceTest {
                 .name("fideos")
                 .price(7.50)
                 .category("alimento").build();*/
+
+        product3 = Product.builder()
+                .code(20L)
+                .name("computadora")
+                .category("electrodomestico")
+                .build();
+
         product = new Product();
         product.setCode(48L);
         product.setName("fideos");
@@ -68,8 +76,11 @@ class ProductServiceTest {
         product2.setCategory("alimento");
         productService.create(product2);
 
+
+
         products.add(product);
         products.add(product2);
+        products.add(product3);
 
     }
 
@@ -78,6 +89,7 @@ class ProductServiceTest {
         //when(productService.create(any(Product.class))).thenReturn(product);
         //assertNotNull(productService.create(product));
         assertEquals(product, productService.create(product));
+        assertEquals(product3, productService.create(product3));
     }
 
     @Test
